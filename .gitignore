@@ -1,0 +1,17 @@
+# Ignorar arquivos 
+*.png
+*.xlsx
+
+# Ignorar pastas específicas
+/__pycache__
+/.venv
+/certificados
+/pdfs
+
+# Ignorar arquivos de configuração de IDE
+.vscode/
+.idea/
+
+# Ignorar arquivos de sistema
+.DS_Store
+

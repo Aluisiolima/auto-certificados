@@ -1,5 +1,6 @@
 import pandas as pd
 from fpdf import FPDF
+import mudandoImg as imgs
 
 # Carregar o arquivo Excel
 arquivo_excel = 'Pasta1.xlsx'
@@ -11,16 +12,16 @@ df = pd.read_excel(arquivo_excel, engine='openpyxl')
 for index, row in df.iterrows():
     # Criar um objeto FPDF
     pdf = FPDF()
-    pdf.set_auto_page_break(auto=True, margin=15)
     pdf.add_page()
 
-    # Definir a fonte para o PDF
-    pdf.set_font("Arial", size=12)
-    linha = f"Linha {index}: {', '.join([str(val) for val in row])}"
-    pdf.cell(200, 10, txt=linha, ln=True)
+    image_path = imgs.nameAluno(dict(row)['Alunos'])  # Substitua pelo caminho da sua imagem
+    pdf.image(image_path, x=10, y=10, w=190)  # Ajuste a posição e o tamanho da imagem
+
     pdf_output = f'pdfs/dados_excel{index}.pdf'
     pdf.output(pdf_output)
+    print(pdf_output)
+    
 
 # Salvar o PDF
 
-print(f"Dados escritos no arquivo PDF: {pdf_output}")
+#print(f"Dados escritos no arquivo PDF: {pdf_output}")
