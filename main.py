@@ -1,6 +1,7 @@
+import os
 import pandas as pd
 from fpdf import FPDF
-import mudandoImg as imgs
+from mudandoImg import Certificado 
 
 # Carregar o arquivo Excel
 arquivo_excel = 'Pasta1.xlsx'
@@ -8,10 +9,22 @@ df = pd.read_excel(arquivo_excel, engine='openpyxl')
 
 
 
+caminhoPdfs = './pdfs'
+caminhoCertificados = './certificados'
+
+if not os.path.isdir(caminhoCertificados):
+    print("O diretório de certificados não existe. Criando...")
+    os.makedirs(caminhoCertificados, exist_ok=True)
+
+if not os.path.isdir(caminhoPdfs):
+    print("O diretório de pdf não existe. Criando...")
+    os.makedirs(caminhoPdfs, exist_ok=True)
+
+
 # Escrever os dados no PDF
 for index, row in df.iterrows():
     #criado obejeto Certificado
-    certificado = imgs.Certificado(nameAluno=dict(row)['Alunos'])
+    certificado = Certificado(nameAluno=dict(row)['Alunos'])
     # Criar um objeto FPDF
     pdf = FPDF()
     pdf.add_page()
