@@ -23,18 +23,20 @@ if not os.path.isdir(caminhoPdfs):
 
 # Escrever os dados no PDF
 for index, row in df.iterrows():
+    inf = dict(row)
     #criado obejeto Certificado
-    certificado = Certificado(nameAluno=dict(row)['Alunos'])
-    # Criar um objeto FPDF
+    certificado = Certificado(nameAluno=inf['Alunos'],nameCurso=inf['nome curso'],dataInit=inf['data de inicio'],dataFinally=inf['data de termino'],cargaHoraria=inf['carga horaria'])
+    #Criar um objeto FPDF
     pdf = FPDF()
     pdf.add_page()
 
-    image_path = certificado.geraAluno()  # Substitua pelo caminho da sua imagem
+    image_path = certificado.gera_certificado()  # Substitua pelo caminho da sua imagem
     pdf.image(image_path, x=10, y=10, w=190)  # Ajuste a posição e o tamanho da imagem
 
-    pdf_output = f'pdfs/cetificado-{dict(row)['Alunos']}.pdf'
+    pdf_output = f'pdfs/cetificado-{inf['Alunos']}.pdf'
     pdf.output(pdf_output)
     print(pdf_output)
+
     
 
 # Salvar o PDF
