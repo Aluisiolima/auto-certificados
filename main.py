@@ -3,7 +3,9 @@ import pandas as pd
 from fpdf import FPDF
 from tkinter import filedialog, scrolledtext, ttk
 import tkinter as tk
+import threading
 from mudandoImg import Certificado 
+
 
 
 def main(planilha):
@@ -80,10 +82,12 @@ def carregar_caminho():
         )
         
         if caminho_arquivo:
-            main(caminho_arquivo)
+            gerador = threading.Thread(target=main, args=(caminho_arquivo,))
+            gerador.start()
+            
 
     except Exception as e :
-        caixa_detalhes.insert(tk.END, f"Ocorreu um ERROR!!!:{e}\n", 'true')
+        caixa_detalhes.insert(tk.END, f"Ocorreu um ERROR!!!:{e}\n", 'false')
         caixa_detalhes.see(tk.END)
     
     
@@ -119,7 +123,7 @@ def app():
     label_percentual.pack(pady=10)
 
     caixa_detalhes = scrolledtext.ScrolledText(janela, width=50, height=10, wrap=tk.WORD,bg='black',fg='white')
-    caixa_detalhes.tag_config('true',background='gree')
+    caixa_detalhes.tag_config('true',background='green')
     caixa_detalhes.tag_config('false',background='red')
     caixa_detalhes.pack(pady=10)
 
