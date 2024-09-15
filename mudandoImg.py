@@ -45,55 +45,46 @@ class Certificado:
         
     def gera_text_aluno(self):
         draw = self.draw
-        img = self.img
+        color_text = "#334166"
+
         # Definindo as coordenadas do retângulo
         quadrado = [(627, 1490), (2875, 1762)]
-        
-        # Texto a ser adicionado
+
         text1 = f'CONCLUIU COM EXCELENTE APROVEITAMENTO O CURSO DE {self.nameCurso},'
         text2 = f'NA MODALIDADE PRESENCIAL, EM NOSSA INSTITUIÇÃO DE ENSINO, ATINGINDO UM TOTAL'
         text3 = f'DE {int(self.cargaHoraria)} HORAS DE AULAS NO PERÍODO DE {self.dataInit} À {self.dataFinally}.'
 
-        font = ImageFont.truetype("./fontes/OpenSans/OpenSans-VariableFont_wdth,wght.ttf", 55)
+        font = ImageFont.truetype("./fontes/OpenSans/static/OpenSans_Condensed-ExtraBold.ttf", 55)
 
-        # Desenhando o retângulo sem borda (sem outline)
-        draw.rectangle(quadrado, fill="#fbfbfb")
+        # Desenhando o retângulo 
+        draw.rectangle(quadrado, width=0)
 
-        # Função para calcular a posição do texto
-        def calcula_posicao_texto(texto, y_offset):
+         # Função para calcular a posição do texto horizontamente
+        def calcula_posicao_texto(texto, posicao_y):
             bbox = draw.textbbox((0, 0), texto, font=font)
             text_width = bbox[2] - bbox[0]
-            text_height = bbox[3] - bbox[1]
-            
+                    
             x = (quadrado[0][0] + quadrado[1][0] - text_width) // 2
-            y = y_offset
+            y = posicao_y
 
             return (x, y)
 
         # Definindo a posição inicial do texto e o espaçamento entre linhas
-        start_y = quadrado[0][1] + 10  # Margem superior do retângulo
-        line_spacing = 10  # Espaçamento entre linhas
+        margin_top = quadrado[0][1] + 10  # Margem superior do retângulo
+        espaco_entre_line = 10  # Espaçamento entre linhas
 
-        # Calculando e desenhando cada linha de texto
-        x1, y1 = calcula_posicao_texto(text1, start_y)
-        draw.text((x1, y1), text1.upper(), font=font, fill="black")
 
-        start_y += draw.textbbox((0, 0), text1, font=font)[3] - draw.textbbox((0, 0), text1, font=font)[1] + line_spacing
-        x2, y2 = calcula_posicao_texto(text2, start_y)
-        draw.text((x2, y2), text2.upper(), font=font, fill="black")
+        x1, y1 = calcula_posicao_texto(text1, margin_top)
+        draw.text((x1, y1), text1.upper(), font=font, fill=color_text)
 
-        start_y += draw.textbbox((0, 0), text2, font=font)[3] - draw.textbbox((0, 0), text2, font=font)[1] + line_spacing
-        x3, y3 = calcula_posicao_texto(text3, start_y)
-        draw.text((x3, y3), text3.upper(), font=font, fill="black")
+        margin_top += draw.textbbox((0, 0), text1, font=font)[3] - draw.textbbox((0, 0), text1, font=font)[1] + espaco_entre_line
+        x2, y2 = calcula_posicao_texto(text2, margin_top)
+        draw.text((x2, y2), text2.upper(), font=font, fill=color_text)
 
-        # Salva a imagem
-        
-            
-    def gera_ano_certificado(self):
-        draw = self.draw
-        img = self.img
-        # Definindo as coordenadas do retângulo
-        quadrado = [(627, 1490), (2875, 1762)]
+        margin_top += draw.textbbox((0, 0), text2, font=font)[3] - draw.textbbox((0, 0), text2, font=font)[1] + espaco_entre_line
+        x3, y3 = calcula_posicao_texto(text3, margin_top)
+        draw.text((x3, y3), text3.upper(), font=font, fill=color_text)
+
 
     def ano_gerado(self):
         draw = self.draw
