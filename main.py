@@ -1,17 +1,15 @@
 import os
 import pandas as pd
 from fpdf import FPDF
-from tkinter import filedialog
-from tkinter import ttk
+from tkinter import filedialog, scrolledtext, ttk
 import tkinter as tk
 from mudandoImg import Certificado 
 
 
 def main(planilha):
-    mensagem_init = tk.Label(janela, text="carrengando a planilha!!!" ,fg='white', bg='#3CCAE0')
-    mensagem_init.pack(pady=10)
-    
-   
+    caixa_detalhes.insert(tk.END, f"carrengando a planilha!!!\n",'verde')
+    caixa_detalhes.see(tk.END) 
+    janela.update()   
     # Carregar o arquivo Excel
     arquivo_excel = planilha
     df = pd.read_excel(arquivo_excel, engine='openpyxl')
@@ -22,18 +20,19 @@ def main(planilha):
     caminhoCertificados = './certificados'
 
     if not os.path.isdir(caminhoCertificados):
-        
-        mensagem_create_diretorio_certificados = tk.Label(janela, text="O diretório de certificados não existe. Criando..." ,fg='white', bg='#3CCAE0')
-        mensagem_create_diretorio_certificados.pack(pady=10)
-        
+
+        caixa_detalhes.insert(tk.END, f"O diretório de certificados não existe. Criando...\n", 'true')
+        caixa_detalhes.see(tk.END) 
         os.makedirs(caminhoCertificados, exist_ok=True)
+        janela.update()  
+
 
     if not os.path.isdir(caminhoPdfs):
-       
-        mensagem_create_diretorio_pdfs = tk.Label(janela, text="O diretório de pdf não existe. Criando..." ,fg='white', bg='#3CCAE0')
-        mensagem_create_diretorio_pdfs.pack(pady=10)
+        caixa_detalhes.insert(tk.END, f"O diretório de pdf não existe. Criando...\n", 'true')
+        caixa_detalhes.see(tk.END) 
 
         os.makedirs(caminhoPdfs, exist_ok=True)
+        janela.update()  
 
 
     # Escrever os dados no PDF
@@ -56,9 +55,16 @@ def main(planilha):
 
         pdf_output = f'pdfs/cetificado-{inf['Alunos']}.pdf'
         pdf.output(pdf_output)
-        print(pdf_output)
-        
-    print(f"terminou")
+
+        caixa_detalhes.insert(tk.END, f"criado o certificado da: {inf['Alunos']}\n", 'true')
+        caixa_detalhes.see(tk.END) 
+
+        janela.update()  
+
+    caixa_detalhes.insert(tk.END, f"terminou agora e so imprimir!!!\n", 'true')
+    caixa_detalhes.see(tk.END) 
+    janela.update()   
+    
 
 
 
@@ -66,19 +72,24 @@ def main(planilha):
 # Função para carregar e exibir o conteúdo do arquivo Excel
 # Função para carregar o caminho do arquivo Excel
 def carregar_caminho():
-    # Abrir caixa de diálogo para seleção do arquivo
-    caminho_arquivo = filedialog.askopenfilename(
-        title="Selecione um arquivo Excel",
-        filetypes=[("Arquivos Excel", "*.xlsx;*.xls")]
-    )
-    
-    if caminho_arquivo:
-        label['text'] = 'carrengando a planilha'
-        main(caminho_arquivo)
+    try:
+        # Abrir caixa de diálogo para seleção do arquivo
+        caminho_arquivo = filedialog.askopenfilename(
+            title="Selecione um arquivo Excel",
+            filetypes=[("Arquivos Excel", "*.xlsx;*.xls")]
+        )
         
+        if caminho_arquivo:
+            main(caminho_arquivo)
+
+    except Exception as e :
+        caixa_detalhes.insert(tk.END, f"Ocorreu um ERROR!!!:{e}\n", 'true')
+        caixa_detalhes.see(tk.END)
+    
+    
         
 def app():
-    global janela
+    global janela,caixa_detalhes
     # Criando a janela principal
     janela = tk.Tk()
     janela.title("auto-certificação")
@@ -97,7 +108,7 @@ def app():
     
 
     # Inicializando a variável de progresso
-    progresso = 0
+    #progresso = 0
 
     # Adicionando a barra de progresso
     barra_progresso = ttk.Progressbar(janela, orient='horizontal', length=300, mode='determinate')
@@ -106,6 +117,11 @@ def app():
     # Adicionando a label para exibir a porcentagem
     label_percentual = tk.Label(janela, text="0%")
     label_percentual.pack(pady=10)
+
+    caixa_detalhes = scrolledtext.ScrolledText(janela, width=50, height=10, wrap=tk.WORD,bg='black',fg='white')
+    caixa_detalhes.tag_config('true',background='gree')
+    caixa_detalhes.tag_config('false',background='red')
+    caixa_detalhes.pack(pady=10)
 
     # Iniciando o loop da interface gráfica
     janela.mainloop()
