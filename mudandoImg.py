@@ -1,16 +1,16 @@
 from PIL import Image, ImageDraw, ImageFont
+from datetime import datetime
 
 #texto = str(input("texto:"))
 
 class Certificado:
 
-    def __init__(self,* ,nameAluno : str,cargaHoraria : str, dataInit : str, dataFinally : str, nameCurso : str,ano = None):
+    def __init__(self,* ,nameAluno : str,cargaHoraria : str, dataInit : str, dataFinally : str, nameCurso : str):
         self.nameAluno = nameAluno
         self.cargaHoraria = cargaHoraria
         self.dataInit = dataInit
         self.dataFinally = dataFinally
         self.nameCurso = nameCurso   
-        self.ano = ano
         self.img = Image.open('certificado.png')
         self.draw = ImageDraw.Draw(self.img)
 
@@ -28,7 +28,7 @@ class Certificado:
 
         quadrado = [(627, 1184),(2872, 1434)]  
 
-        draw.rectangle(quadrado,width=0,fill="#fbfbfb")
+        draw.rectangle(quadrado,width=0)
         cor = (0,0,0) 
 
 
@@ -52,7 +52,7 @@ class Certificado:
         # Texto a ser adicionado
         text1 = f'CONCLUIU COM EXCELENTE APROVEITAMENTO O CURSO DE {self.nameCurso},'
         text2 = f'NA MODALIDADE PRESENCIAL, EM NOSSA INSTITUIÇÃO DE ENSINO, ATINGINDO UM TOTAL'
-        text3 = f'DE {self.cargaHoraria} HORAS DE AULAS NO PERÍODO DE {self.dataInit} À {self.dataFinally}.'
+        text3 = f'DE {int(self.cargaHoraria)} HORAS DE AULAS NO PERÍODO DE {self.dataInit} À {self.dataFinally}.'
 
         font = ImageFont.truetype("./fontes/OpenSans/OpenSans-VariableFont_wdth,wght.ttf", 55)
 
@@ -95,9 +95,22 @@ class Certificado:
         # Definindo as coordenadas do retângulo
         quadrado = [(627, 1490), (2875, 1762)]
 
+    def ano_gerado(self):
+        draw = self.draw
+        ano = datetime.now().year
+        # Definindo as coordenadas do retângulo
+        quadrado = (1520, 2170)
+        font = ImageFont.truetype("./fontes/OpenSans/static/OpenSans-Medium.ttf", 100)
+
+        # Desenhando o retângulo sem borda (sem outline)
+        draw.rectangle(quadrado,width=0)
+        draw.text(quadrado, str(ano), fill='blue',font=font)
+
+
     def gera_certificado(self):
         self.gera_aluno_name()
         self.gera_text_aluno()
+        self.ano_gerado()
 
         img_path = f'certificados/certificado-{self.nameAluno}.png'
         self.img.save(img_path)

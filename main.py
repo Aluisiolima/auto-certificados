@@ -39,6 +39,6 @@ for index, row in df.iterrows():
 
     
 
-# Salvar o PDF
 
-#print(f"Dados escritos no arquivo PDF: {pdf_output}")
+
+print(f"terminou")

@@ -6,7 +6,7 @@ draw = ImageDraw.Draw(img)
 
 
 # Definindo as coordenadas do retângulo
-quadrado = [(1400, 2090),(1800, 2250)]
+quadrado = [(1520, 2170),(1750, 2280)] 
 
 # Desenhando o retângulo sem borda (sem outline)
 draw.rectangle(quadrado,outline='black', fill="blue")
