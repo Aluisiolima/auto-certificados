@@ -9,6 +9,7 @@ from mudandoImg import Certificado
 
 
 def main(planilha):
+    global barra_progresso, label_percentual
     caixa_detalhes.insert(tk.END, f"carrengando a planilha!!!\n",'verde')
     caixa_detalhes.see(tk.END) 
     janela.update()   
@@ -36,10 +37,19 @@ def main(planilha):
         os.makedirs(caminhoPdfs, exist_ok=True)
         janela.update()  
 
+   # Adicionando a barra de progresso
+    barra_progresso = ttk.Progressbar(janela, orient='horizontal', length=300, mode='determinate')
+    barra_progresso.pack()
 
+    # Adicionando a label para exibir a porcentagem
+    label_percentual = tk.Label(janela, text="0%")
+    label_percentual.pack(pady=10) 
+
+    janela.update() 
     # Escrever os dados no PDF
     for index, row in df.iterrows():
         inf = dict(row)
+        pocentagem_total = (100 / len(df)) * (index + 1)
         #criado obejeto Certificado
         certificado = Certificado(
             nameAluno=inf['Alunos'],
@@ -60,6 +70,8 @@ def main(planilha):
 
         caixa_detalhes.insert(tk.END, f"criado o certificado da: {inf['Alunos']}\n", 'true')
         caixa_detalhes.see(tk.END) 
+        
+        atualizar_progresso(pocentagem_total)
 
         janela.update()  
 
@@ -68,10 +80,6 @@ def main(planilha):
     janela.update()   
     
 
-
-
-
-# Função para carregar e exibir o conteúdo do arquivo Excel
 # Função para carregar o caminho do arquivo Excel
 def carregar_caminho():
     try:
@@ -89,11 +97,23 @@ def carregar_caminho():
     except Exception as e :
         caixa_detalhes.insert(tk.END, f"Ocorreu um ERROR!!!:{e}\n", 'false')
         caixa_detalhes.see(tk.END)
+ 
     
-    
+def atualizar_progresso(index):
+    global progresso
+    progresso =+ index
+    if progresso > 100:
+        progresso = 100
+
+    # Atualiza a barra de progresso
+    barra_progresso['value'] = progresso
+
+    # Atualiza a label de porcentagem
+    label_percentual.config(text=f"{progresso:.2f}%")
+ 
         
 def app():
-    global janela,caixa_detalhes
+    global janela,caixa_detalhes,label_percentual,barra_progresso
     # Criando a janela principal
     janela = tk.Tk()
     janela.title("auto-certificação")
@@ -104,32 +124,18 @@ def app():
     janela.geometry("600x400")
     janela.iconbitmap("./ico/picture.ico")
 
+    botao = tk.Button(janela, text="carregar planilha excel", command=carregar_caminho,width=30,height=2,bg='green',font=16,fg='white')
+    botao.pack(padx=50, pady=50)  
 
-    botao = tk.Button(janela, text="carregar planilha excel", command=carregar_caminho)
-    botao.pack(padx=100, pady=100)  # O método pack() organiza o widget na janela
-
-    # Adicionando um rótulo (label)
-    
-
-    # Inicializando a variável de progresso
-    #progresso = 0
-
-    # Adicionando a barra de progresso
-    barra_progresso = ttk.Progressbar(janela, orient='horizontal', length=300, mode='determinate')
-    barra_progresso.pack(pady=10)
-
-    # Adicionando a label para exibir a porcentagem
-    label_percentual = tk.Label(janela, text="0%")
-    label_percentual.pack(pady=10)
 
     caixa_detalhes = scrolledtext.ScrolledText(janela, width=50, height=10, wrap=tk.WORD,bg='black',fg='white')
     caixa_detalhes.tag_config('true',background='green')
     caixa_detalhes.tag_config('false',background='red')
     caixa_detalhes.pack(pady=10)
-
     # Iniciando o loop da interface gráfica
     janela.mainloop()
 
 
 if __name__ == '__main__':
     app()
+    
