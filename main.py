@@ -1,6 +1,5 @@
 import os
 import pandas as pd
-from fpdf import FPDF
 from tkinter import filedialog, scrolledtext, ttk
 import tkinter as tk
 import threading
@@ -59,23 +58,18 @@ def main(planilha):
             cargaHoraria=inf['carga horaria']
                                   )
         #Criar um objeto FPDF
-        pdf = FPDF()
-        pdf.add_page()
-
-        image_path = certificado.gera_certificado()  # Substitua pelo caminho da sua imagem
-        pdf.image(image_path, x=10, y=10, w=190)  # Ajuste a posição e o tamanho da imagem
 
         pdf_output = f'pdfs/cetificado-{inf['Alunos']}.pdf'
-        pdf.output(pdf_output)
+        image_path = certificado.gera_certificado(output_pdf_path=pdf_output)  # Substitua pelo caminho da sua image
 
-        caixa_detalhes.insert(tk.END, f"criado o certificado da: {inf['Alunos']}\n", 'true')
+        caixa_detalhes.insert(tk.END, f"criado o certificado da: {inf['Alunos']} e tambem {image_path}\n", 'true')
         caixa_detalhes.see(tk.END) 
         
         atualizar_progresso(pocentagem_total)
 
         janela.update()  
 
-    caixa_detalhes.insert(tk.END, f"terminou agora e so imprimir!!!\n", 'true')
+    caixa_detalhes.insert(tk.END, f"terminou agora e so imprimir!!!\n")
     caixa_detalhes.see(tk.END) 
     janela.update()   
     
@@ -97,11 +91,10 @@ def carregar_caminho():
     except Exception as e :
         caixa_detalhes.insert(tk.END, f"Ocorreu um ERROR!!!:{e}\n", 'false')
         caixa_detalhes.see(tk.END)
- 
-    
-def atualizar_progresso(index):
-    global progresso
-    progresso =+ index
+
+
+def atualizar_progresso(progresso):
+
     if progresso > 100:
         progresso = 100
 
@@ -109,7 +102,7 @@ def atualizar_progresso(index):
     barra_progresso['value'] = progresso
 
     # Atualiza a label de porcentagem
-    label_percentual.config(text=f"{progresso:.2f}%")
+    label_percentual.config(text=f"{int(progresso)}%")
  
         
 def app():

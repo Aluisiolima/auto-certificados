@@ -98,13 +98,15 @@ class Certificado:
         draw.text(quadrado, str(ano), fill='blue',font=font)
 
 
-    def gera_certificado(self):
+    def gera_certificado(self,output_pdf_path):
         self.gera_aluno_name()
         self.gera_text_aluno()
         self.ano_gerado()
 
         img_path = f'certificados/certificado-{self.nameAluno}.png'
         self.img.save(img_path)
+        self.img.convert('RGB').save(output_pdf_path, save_all=True, resolution=100.0)
+
         
         return img_path
 
