@@ -115,7 +115,7 @@ def app():
 
     # Definindo o tamanho da janela
     janela.geometry("600x400")
-    janela.iconbitmap("/ico/picture.ico")
+    janela.iconbitmap("ico/picture.ico")
 
     botao = tk.Button(janela, text="carregar planilha excel", command=carregar_caminho,width=30,height=2,bg='green',font=16,fg='white')
     botao.pack(padx=50, pady=50)  

@@ -1,8 +1,6 @@
 from PIL import Image, ImageDraw, ImageFont
 from datetime import datetime
 
-#texto = str(input("texto:"))
-
 class Certificado:
 
     def __init__(self,* ,nameAluno : str,cargaHoraria : str, dataInit : str, dataFinally : str, nameCurso : str):
@@ -24,7 +22,7 @@ class Certificado:
         nomeM = [nome2.capitalize() if len(nome2) > 2 else nome2.lower() for nome2 in nome2]
         nomeEspacamento = (' ' * 2).join(nomeM)
 
-        font = ImageFont.truetype("./fontes/GreatVibes-Regular/GreatVibes-Regular.ttf", 150)
+        font = ImageFont.truetype("fontes/GreatVibes-Regular/GreatVibes-Regular.ttf", 150)
 
         quadrado = [(627, 1184),(2872, 1434)]  
 
@@ -54,7 +52,7 @@ class Certificado:
         text2 = f'NA MODALIDADE PRESENCIAL, EM NOSSA INSTITUIÇÃO DE ENSINO, ATINGINDO UM TOTAL'
         text3 = f'DE {int(self.cargaHoraria)} HORAS DE AULAS NO PERÍODO DE {self.dataInit} À {self.dataFinally}.'
 
-        font = ImageFont.truetype("./fontes/OpenSans/static/OpenSans_Condensed-ExtraBold.ttf", 55)
+        font = ImageFont.truetype("fontes/OpenSans/static/OpenSans_Condensed-ExtraBold.ttf", 55)
 
         # Desenhando o retângulo 
         draw.rectangle(quadrado, width=0)
@@ -91,7 +89,7 @@ class Certificado:
         ano = datetime.now().year
         # Definindo as coordenadas do retângulo
         quadrado = (1520, 2170)
-        font = ImageFont.truetype("./fontes/OpenSans/static/OpenSans-Medium.ttf", 100)
+        font = ImageFont.truetype("fontes/OpenSans/static/OpenSans-Medium.ttf", 100)
 
         # Desenhando o retângulo sem borda (sem outline)
         draw.rectangle(quadrado,width=0)
