@@ -1,6 +1,4 @@
-# Ignorar arquivos 
-*.png
-*.xlsx
+
 
 # Ignorar pastas específicas
 /__pycache__
