@@ -1,6 +1,6 @@
 
 # Auto-Certificação
-    O Auto-Certificação e um projeto de automação pensado em aumenta a velociadades de criação dos certificados das empressas de curso. Com práticidade e facilidade, uma simple solução para o problema de muitos...
+O Auto-Certificação e um projeto de automação pensado em aumenta a velociadades de criação dos certificados das empressas de curso. Com práticidade e facilidade, uma simple solução para o problema de muitos...
 
 ## Índice
 
