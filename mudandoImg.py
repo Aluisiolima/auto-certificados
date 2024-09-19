@@ -27,7 +27,7 @@ class Certificado:
         quadrado = [(627, 1184),(2872, 1434)]  
 
         draw.rectangle(quadrado,width=0)
-        cor = (0,0,0) 
+        cor = "#334166" 
 
 
         bbox = draw.textbbox((0, 0), nomeEspacamento, font=font)
@@ -52,7 +52,7 @@ class Certificado:
         text2 = f'NA MODALIDADE PRESENCIAL, EM NOSSA INSTITUIÇÃO DE ENSINO, ATINGINDO UM TOTAL'
         text3 = f'DE {int(self.cargaHoraria)} HORAS DE AULAS NO PERÍODO DE {self.dataInit} À {self.dataFinally}.'
 
-        font = ImageFont.truetype("fontes/OpenSans/static/OpenSans_Condensed-ExtraBold.ttf", 55)
+        font = ImageFont.truetype("fontes/OpenSans/static/OpenSans_Condensed-ExtraBold.ttf", 60)
 
         # Desenhando o retângulo 
         draw.rectangle(quadrado, width=0)
@@ -88,12 +88,12 @@ class Certificado:
         draw = self.draw
         ano = datetime.now().year
         # Definindo as coordenadas do retângulo
-        quadrado = (1520, 2170)
-        font = ImageFont.truetype("fontes/OpenSans/static/OpenSans-Medium.ttf", 100)
+        quadrado = (1500, 2125)
+        font = ImageFont.truetype("./fontes/OpenSans/static/OpenSans-ExtraBold.ttf", 120)
 
         # Desenhando o retângulo sem borda (sem outline)
         draw.rectangle(quadrado,width=0)
-        draw.text(quadrado, str(ano), fill='blue',font=font)
+        draw.text(quadrado, str(ano), fill="#334166",font=font)
 
 
     def gera_certificado(self,output_pdf_path):
