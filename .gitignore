@@ -3,9 +3,9 @@
 # Ignorar pastas específicas
 **/__pycache__
 /.venv
-**/certificados
-**/pdfs
-/build
+**/certificados/
+**/pdfs/
+/build/
 
 # Ignorar arquivos de configuração de IDE
 .vscode/

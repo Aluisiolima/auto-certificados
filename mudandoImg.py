@@ -12,14 +12,24 @@ class Certificado:
         self.img = Image.open('certificado.png')
         self.draw = ImageDraw.Draw(self.img)
 
-       
+    def verificacao_name(self,nome2):
+        ligacoes = ['de', 'do', 'da', 'dos', 'das', "d'", 'di', 'del', 'du', 'von', 'van', 'a', 'à', 'e', 'com']
+
+        if nome2 in ligacoes:
+            return False
+        
+        return True
+
+
+
+
+
     def gera_aluno_name(self):
         draw = self.draw
         nome = self.nameAluno
-        img = self.img
 
         nome2 = nome.split()
-        nomeM = [nome2.capitalize() if len(nome2) > 2 else nome2.lower() for nome2 in nome2]
+        nomeM = [nome2.capitalize() if self.verificacao_name(nome2) else nome2.lower() for nome2 in nome2]
         nomeEspacamento = (' ' * 2).join(nomeM)
 
         font = ImageFont.truetype("fontes/GreatVibes-Regular/GreatVibes-Regular.ttf", 150)
