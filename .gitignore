@@ -2,7 +2,7 @@
 
 # Ignorar pastas específicas
 **/__pycache__
-/.venv
+.venv
 **/certificados/
 **/pdfs/
 /build/
